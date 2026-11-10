@@ -1,0 +1,26 @@
+.appLogo {
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.2s ease;
+}
+
+.appLogo:hover {
+  filter: drop-shadow(0 0 8px rgba(16, 163, 127, 0.45));
+  transform: scale(1.05);
+}
+
+.appLogo--sm {
+  width: 28px;
+  height: 28px;
+}
+
+.appLogo--md {
+  width: 36px;
+  height: 36px;
+}
+
+.appLogo--lg {
+  width: 72px;
+  height: 72px;
+}

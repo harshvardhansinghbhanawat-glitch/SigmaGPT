@@ -1,0 +1,317 @@
+.sidebar {
+  background-color: var(--bg-primary);
+  color: var(--text-secondary);
+  height: 100vh;
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-right: 1px solid var(--border-light);
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  z-index: 100;
+  position: relative;
+}
+
+/* Collapsed on desktop */
+.app.sidebar-collapsed .sidebar {
+  transform: translateX(-100%);
+  width: 0;
+  min-width: 0;
+  border-right: none;
+  visibility: hidden;
+  position: absolute;
+}
+
+/* Sidebar header */
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.85rem 0.85rem 0.5rem;
+}
+
+.newChatBtn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.7rem 0.85rem;
+  border-radius: 8px;
+  background-color: transparent;
+  border: 1px solid var(--border-light);
+  cursor: pointer;
+  width: 100%;
+  transition: all 0.2s ease;
+  color: var(--text-primary);
+}
+
+.newChatBtn:hover {
+  background-color: var(--bg-surface-hover);
+  border-color: var(--border-focus);
+}
+
+.newChatBtnLeft {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.newChatBtnLeft span {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.newChatBtn i {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.sidebarCloseBtn {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.sidebarCloseBtn:hover {
+  background: var(--bg-surface);
+  color: #fff;
+}
+
+/* History search */
+.historySearch {
+  position: relative;
+  margin: 0.25rem 0.85rem 0.5rem;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  pointer-events: none;
+}
+
+.searchInput {
+  width: 100%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-light);
+  border-radius: 6px;
+  padding: 0.45rem 0.75rem 0.45rem 2rem;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+  border-color: var(--border-focus);
+}
+
+/* History Section */
+.historySection {
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.historyHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem 0.35rem;
+}
+
+.historyTitle {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.historyCount {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.1rem 0.4rem;
+  border-radius: 8px;
+}
+
+.history {
+  margin: 0 0.5rem;
+  padding: 0.25rem 0.35rem 0.75rem;
+  flex: 1;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 255, 255, 0.1) transparent;
+}
+
+.history::-webkit-scrollbar {
+  width: 5px;
+}
+
+.history::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
+
+.history li {
+  list-style: none;
+  cursor: pointer;
+  padding: 0.6rem 0.75rem;
+  margin-bottom: 0.2rem;
+  font-size: 0.88rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  position: relative;
+  transition: background-color 0.15s ease;
+  color: var(--text-secondary);
+}
+
+.history li:hover {
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
+}
+
+.history li.highlighted {
+  background-color: var(--bg-surface-hover);
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.threadIcon {
+  font-size: 0.82rem;
+  margin-right: 0.65rem;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.history li:hover .threadIcon,
+.history li.highlighted .threadIcon {
+  color: var(--text-primary);
+}
+
+.threadTitle {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 0.88rem;
+  padding-right: 1.5rem;
+}
+
+.emptyHistory {
+  color: var(--text-muted);
+  font-style: italic;
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 2rem 1rem !important;
+  cursor: default !important;
+}
+
+.emptyHistory:hover {
+  background-color: transparent !important;
+}
+
+.deleteBtn {
+  opacity: 0;
+  position: absolute;
+  right: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 0.3rem 0.4rem;
+  border-radius: 4px;
+  transition: all 0.15s ease;
+}
+
+.history li:hover .deleteBtn {
+  opacity: 1;
+}
+
+.deleteBtn:hover {
+  color: #ef4444;
+  background: rgba(239, 68, 68, 0.1);
+}
+
+/* Sidebar footer */
+.sidebarFooter {
+  padding: 0.75rem 0.85rem;
+  border-top: 1px solid var(--border-light);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.sign {
+  text-align: center;
+}
+
+.attribution {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-bottom: 0.35rem;
+}
+
+.maintainerLink {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.maintainerLink:hover {
+  color: var(--accent-emerald);
+  text-decoration: underline;
+}
+
+.repoLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  transition: all 0.2s;
+}
+
+.repoLink:hover {
+  color: var(--text-primary);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Mobile drawer responsiveness */
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 290px;
+    min-width: 290px;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.6);
+    transform: translateX(-100%);
+  }
+
+  .sidebar.open {
+    transform: translateX(0);
+  }
+
+  .sidebarCloseBtn {
+    display: block;
+  }
+}
