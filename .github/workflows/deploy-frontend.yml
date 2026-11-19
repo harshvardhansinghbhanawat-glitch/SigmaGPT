@@ -1,4 +1,4 @@
-name: Deploy Frontend
+name: Frontend CI & Build
 
 on:
   push:
@@ -6,26 +6,48 @@ on:
     paths:
       - "Frontend/**"
       - ".github/workflows/deploy-frontend.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "Frontend/**"
 
 jobs:
-  deploy:
+  build:
+    name: Build & Verify Frontend
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Install and build
+          cache: "npm"
+          cache-dependency-path: Frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: Frontend
+        run: npm ci
+
+      - name: Build frontend
         working-directory: Frontend
         env:
           VITE_API_URL: ${{ secrets.VITE_API_URL }}
-        run: |
-          npm ci
-          npm run build
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          working-directory: Frontend
+        run: npm run build
+
+      # NOTE: Automatic deployment is handled directly by Vercel's native GitHub integration
+      # on every push to main. If you ever want GitHub Actions to deploy directly instead,
+      # configure the repository secrets (VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID)
+      # and uncomment the step below:
+      #
+      # - name: Deploy to Vercel (Optional CLI deployment)
+      #   if: ${{ secrets.VERCEL_TOKEN != '' }}
+      #   uses: amondnet/vercel-action@v25
+      #   with:
+      #     vercel-token: ${{ secrets.VERCEL_TOKEN }}
+      #     vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+      #     vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+      #     vercel-args: '--prod'
+      #     working-directory: Frontend
